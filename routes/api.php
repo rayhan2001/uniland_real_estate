@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AgentAuthController;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
+use App\Http\Controllers\Setting\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,10 +64,14 @@ Route::middleware('auth:admin', 'admin')->group(function () {
     });
 
     Route::prefix('settings')->group(function () {
-        Route::post('site-info', [SubCategoryController::class, 'store']);
-        Route::post('update/{id}', [SubCategoryController::class, 'update']);
-        Route::delete('delete/{id}', [SubCategoryController::class, 'destroy']);
-        Route::get('get-all-sub-categories', [SubCategoryController::class, 'allSubCategory']);
+        Route::get('site-info', [SettingController::class, 'getSiteInfo']);
+        Route::post('site-info/update', [SettingController::class, 'updateSiteInfo']);
+        Route::get('contact-info', [SettingController::class, 'getContactInfo']);
+        Route::post('contact-info/update', [SettingController::class, 'updateContactInfo']);
+        Route::get('social-info', [SettingController::class, 'getSocialInfo']);
+        Route::post('social-info/update', [SettingController::class, 'updateSocialInfo']);
+        Route::get('mail-config', [SettingController::class, 'mailInfo']);
+        Route::post('mail-config/update', [SettingController::class, 'updateMailConfig']);
     });
 });
 
