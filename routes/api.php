@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AgentAuthController;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\SubCategory\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,11 +47,26 @@ Route::middleware('auth:admin', 'admin')->group(function () {
     Route::get('admin/dashboard', function () {
         return response()->json(['message' => 'Welcome, Admin!']);
     });
+
     Route::prefix('category')->group(function () {
         Route::post('store', [CategoryController::class, 'store']);
         Route::post('update/{id}', [CategoryController::class, 'update']);
         Route::delete('delete/{id}', [CategoryController::class, 'destroy']);
         Route::get('get-all-categories', [CategoryController::class, 'allCategory']);
+    });
+
+    Route::prefix('sub-category')->group(function () {
+        Route::post('store', [SubCategoryController::class, 'store']);
+        Route::post('update/{id}', [SubCategoryController::class, 'update']);
+        Route::delete('delete/{id}', [SubCategoryController::class, 'destroy']);
+        Route::get('get-all-sub-categories', [SubCategoryController::class, 'allSubCategory']);
+    });
+
+    Route::prefix('settings')->group(function () {
+        Route::post('site-info', [SubCategoryController::class, 'store']);
+        Route::post('update/{id}', [SubCategoryController::class, 'update']);
+        Route::delete('delete/{id}', [SubCategoryController::class, 'destroy']);
+        Route::get('get-all-sub-categories', [SubCategoryController::class, 'allSubCategory']);
     });
 });
 
