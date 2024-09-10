@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
+use App\Http\Controllers\Propertie\PropertieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,14 +52,14 @@ Route::middleware('auth:admin', 'admin')->group(function () {
 
     Route::prefix('category')->group(function () {
         Route::post('store', [CategoryController::class, 'store']);
-        Route::post('update/{id}', [CategoryController::class, 'update']);
+        Route::post('update', [CategoryController::class, 'update']);
         Route::delete('delete/{id}', [CategoryController::class, 'destroy']);
         Route::get('get-all-categories', [CategoryController::class, 'allCategory']);
     });
 
     Route::prefix('sub-category')->group(function () {
         Route::post('store', [SubCategoryController::class, 'store']);
-        Route::post('update/{id}', [SubCategoryController::class, 'update']);
+        Route::post('update', [SubCategoryController::class, 'update']);
         Route::delete('delete/{id}', [SubCategoryController::class, 'destroy']);
         Route::get('get-all-sub-categories', [SubCategoryController::class, 'allSubCategory']);
     });
@@ -72,6 +73,13 @@ Route::middleware('auth:admin', 'admin')->group(function () {
         Route::post('social-info/update', [SettingController::class, 'updateSocialInfo']);
         Route::get('mail-config', [SettingController::class, 'mailInfo']);
         Route::post('mail-config/update', [SettingController::class, 'updateMailConfig']);
+    });
+
+    Route::prefix('properties')->group(function () {
+        Route::post('store', [PropertieController::class, 'store']);
+        Route::post('update', [PropertieController::class, 'update']);
+        Route::delete('delete/{id}', [PropertieController::class, 'destroy']);
+        Route::get('get-regular-properties', [PropertieController::class, 'allData']);
     });
 });
 

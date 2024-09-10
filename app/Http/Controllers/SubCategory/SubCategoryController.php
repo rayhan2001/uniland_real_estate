@@ -63,6 +63,9 @@ class SubCategoryController extends Controller
     public function destroy($id)
     {
         $sub_category = SubCategory::find($id);
+        if ($sub_category->icon){
+            unlink($sub_category->icon);
+        }
         $sub_category->delete();
         return response()->json(['message' => 'Subcategory deleted successfully'], 200);
     }

@@ -61,6 +61,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        if ($category->icon){
+            unlink($category->icon);
+        }
         $category->delete();
         return response()->json(['message' => 'Category deleted successfully'], 200);
     }
