@@ -9,6 +9,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
+use App\Http\Controllers\Slider\SliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,13 @@ Route::middleware('auth:admin', 'admin')->group(function () {
         Route::post('update', [PropertieController::class, 'update']);
         Route::delete('delete/{id}', [PropertieController::class, 'destroy']);
         Route::get('get-regular-properties', [PropertieController::class, 'allData']);
+    });
+
+    Route::prefix('sliders')->group(function () {
+        Route::post('store', [SliderController::class, 'store']);
+        Route::post('update', [SliderController::class, 'update']);
+        Route::delete('delete/{id}', [SliderController::class, 'destroy']);
+        Route::get('get-slider-data', [SliderController::class, 'allData']);
     });
 });
 
