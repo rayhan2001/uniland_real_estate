@@ -10,6 +10,7 @@ use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
 use App\Http\Controllers\Slider\SliderController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,5 +90,10 @@ Route::middleware('auth:admin', 'admin')->group(function () {
         Route::delete('delete/{id}', [SliderController::class, 'destroy']);
         Route::get('get-slider-data', [SliderController::class, 'allData']);
     });
+});
+
+Route::get('case-clear', function () {
+    Artisan::call('optimize:clear');
+    return "Cleared!";
 });
 

@@ -32,7 +32,10 @@ class UserAuthController extends Controller
         $token = $user->createToken('User Token')->accessToken;
         
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'data' => $user,
+            'token' => $token
+        ], 200);
     }
 
     // User Login
@@ -50,7 +53,10 @@ class UserAuthController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             $token = $user->createToken('User Token')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json([
+                'data' => $user,
+                'token' => $token
+            ], 200);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

@@ -31,7 +31,10 @@ class AdminAuthController extends Controller
 
         $token = $admin->createToken('Admin Token')->accessToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'data' => $admin,
+            'token' => $token
+        ], 200);
     }
 
     // Admin Login
@@ -50,7 +53,10 @@ class AdminAuthController extends Controller
 
         if ($admin && Hash::check($request->password, $admin->password)) {
             $token = $admin->createToken('Admin Token')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json([
+                'data'=> $admin,
+                'token' => $token
+            ], 200);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

@@ -31,7 +31,10 @@ class AgentAuthController extends Controller
 
         $token = $agent->createToken('Agent Token')->accessToken;
 
-        return response()->json(['token' => $token], 200);
+        return response()->json([
+            'data' => $agent,
+            'token' => $token
+        ], 200);
     }
 
     // Agent Login
@@ -50,7 +53,10 @@ class AgentAuthController extends Controller
 
         if ($agent && Hash::check($request->password, $agent->password)) {
             $token = $agent->createToken('Agent Token')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response()->json([
+                'data' => $agent,
+                'token' => $token
+            ], 200);
         } else {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
