@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Agent\AgentDetailsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
 use App\Http\Controllers\Slider\SliderController;
+use App\Models\Country;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -90,6 +92,15 @@ Route::middleware('auth:admin', 'admin')->group(function () {
         Route::delete('delete/{id}', [SliderController::class, 'destroy']);
         Route::get('get-slider-data', [SliderController::class, 'allData']);
     });
+
+    Route::post('admin/agent-regestration', [AgentDetailsController::class, 'agentRegistration']);
+    Route::get('admin/agent-details', [AgentDetailsController::class, 'agentDetails']);
+    Route::post('admin/agent-details-update', [AgentDetailsController::class, 'agentDetailsUpdate']);
+});
+
+Route::get('countries', function () {
+    $countries = Country::all();
+    return response()->json(['data' => $countries], 200);
 });
 
 Route::get('case-clear', function () {
