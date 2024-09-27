@@ -192,4 +192,12 @@ class AgentDetailsController extends Controller
 
         return response()->json(['success' => 'Agent Details Updated Successfully'], 200);
     }
+
+    public function destroy($id)
+    {
+        $agent_details = AgentDetails::find($id);
+        $agent_details->is_deleted = 1;
+        $agent_details->delete();
+        return response()->json(['message' => 'Agent Details Deleted Successfully'], 200);
+    }
 }

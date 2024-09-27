@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('identification_no');
             $table->string('identification_image_front');
             $table->string('identification_image_back');
+            $table->unsignedBigInteger('is_deleted')->default(0);
             $table->timestamps();
         });
     }

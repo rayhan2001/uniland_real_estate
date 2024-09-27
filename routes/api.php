@@ -12,7 +12,6 @@ use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
 use App\Http\Controllers\Slider\SliderController;
 use App\Models\Country;
-use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +95,7 @@ Route::middleware('auth:admin', 'admin')->group(function () {
     Route::post('admin/agent-regestration', [AgentDetailsController::class, 'agentRegistration']);
     Route::get('admin/agent-details', [AgentDetailsController::class, 'agentDetails']);
     Route::post('admin/agent-details-update', [AgentDetailsController::class, 'agentDetailsUpdate']);
+    Route::delete('admin/agent-details/{id}', [AgentDetailsController::class, 'destroy']);
 });
 
 Route::get('countries', function () {
@@ -103,8 +103,4 @@ Route::get('countries', function () {
     return response()->json(['data' => $countries], 200);
 });
 
-Route::get('case-clear', function () {
-    Artisan::call('optimize:clear');
-    return "Cleared!";
-});
 
