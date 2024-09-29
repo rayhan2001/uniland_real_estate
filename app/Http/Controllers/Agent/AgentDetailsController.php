@@ -92,6 +92,9 @@ class AgentDetailsController extends Controller
             $image->move($destinationPath, $name);
             $agent_details->identification_image_back = $name;
         }
+        if($request->is_admin == true){
+            $agent_details->status = 'approved';
+        }
         $agent_details->save();
 
         return response()->json(['success' => 'Agent Details Added Successfully'], 200);
@@ -187,7 +190,9 @@ class AgentDetailsController extends Controller
             $image->move(public_path('images/agents-details'), $name);
             $agent_details->identification_image_back = $name;
         }
-
+        if($request->is_admin == true){
+            $agent_details->status = 'approved';
+        }
         $agent_details->save();
 
         return response()->json(['success' => 'Agent Details Updated Successfully'], 200);

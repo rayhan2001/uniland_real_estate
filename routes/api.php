@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AgentAuthController;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Package\PackageController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
@@ -91,16 +92,23 @@ Route::middleware('auth:admin', 'admin')->group(function () {
         Route::delete('delete/{id}', [SliderController::class, 'destroy']);
         Route::get('get-slider-data', [SliderController::class, 'allData']);
     });
+});
 
-    Route::post('admin/agent-regestration', [AgentDetailsController::class, 'agentRegistration']);
-    Route::get('admin/agent-details', [AgentDetailsController::class, 'agentDetails']);
-    Route::post('admin/agent-details-update', [AgentDetailsController::class, 'agentDetailsUpdate']);
-    Route::delete('admin/agent-details/{id}', [AgentDetailsController::class, 'destroy']);
+
+// Common Routes
+Route::post('agent-regestration', [AgentDetailsController::class, 'agentRegistration']);
+Route::get('agent-details', [AgentDetailsController::class, 'agentDetails']);
+Route::post('agent-details-update', [AgentDetailsController::class, 'agentDetailsUpdate']);
+Route::delete('agent-details/{id}', [AgentDetailsController::class, 'destroy']);
+
+Route::prefix('packages')->group(function () {
+    Route::post('store', [PackageController::class, 'store']);
+    Route::post('update', [PackageController::class, 'update']);
+    Route::delete('delete/{id}', [PackageController::class, 'destroy']);
+    Route::get('all-packages', [PackageController::class, 'allPackages']);
 });
 
 Route::get('countries', function () {
     $countries = Country::all();
     return response()->json(['data' => $countries], 200);
 });
-
-

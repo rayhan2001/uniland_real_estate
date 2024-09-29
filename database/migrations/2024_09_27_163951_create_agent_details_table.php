@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('identification_image_front');
             $table->string('identification_image_back');
             $table->unsignedBigInteger('is_deleted')->default(0);
+            $table->enum('status', ['approved', 'pending'])->default('pending');
             $table->timestamps();
         });
     }
