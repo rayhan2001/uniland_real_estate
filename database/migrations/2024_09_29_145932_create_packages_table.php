@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('price');
-            $table->string('limit');
-            $table->string('no_of_property');
+            $table->string('package_name');
+            $table->decimal('price', 8, 2);
+            $table->string('frequency');
+            $table->string('property_limit');
             $table->string('no_of_adds');
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->integer('agent_profile');
+            $table->string('agency_profile');
+            $table->integer('featured_properties');
+            $table->integer('is_delete')->default(0);
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->timestamps();
         });
     }

@@ -106,6 +106,7 @@ Route::prefix('packages')->group(function () {
     Route::post('update', [PackageController::class, 'update']);
     Route::delete('delete/{id}', [PackageController::class, 'destroy']);
     Route::get('all-packages', [PackageController::class, 'allPackages']);
+    Route::get('get-packages', [PackageController::class, 'getPackages']);
 });
 
 Route::get('countries', function () {
