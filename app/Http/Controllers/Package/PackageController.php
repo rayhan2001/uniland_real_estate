@@ -11,7 +11,7 @@ class PackageController extends Controller
 {
     public function allPackages()
     {
-        $packages = Package::all()->map(function ($package) {
+        $packages = Package::where('is_delete', 0)->get()->map(function ($package) {
             return [
                 'id' => $package->id,
                 'package_name' => $package->package_name,
@@ -61,33 +61,42 @@ class PackageController extends Controller
         $validator = Validator::make($request->all(), [
             'package_name' => 'required',
             'price' => 'required',
-
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+    
+        try {
+            $package = Package::find($request->id);
 
-        $package = Package::find($request->id);
-        $package->package_name = $request->package_name;
-        $package->price = $request->price;
-        $package->frequency = $request->frequency;
-        $package->property_limit = $request->property_limit;
-        $package->no_of_adds = $request->no_of_adds;
-        $package->agent_profile = $request->agent_profile;
-        $package->featured_properties = $request->featured_properties;
-        $package->agency_profile = $request->agency_profile;
-        $package->status = $request->status;
-        $package->save();
-
-        return response()->json(['message' => 'Package updated successfully'], 200);
+            if (!$package) {
+                return response()->json(['error' => 'Package not found'], 404);
+            }
+    
+            // Update package fields
+            $package->package_name = $request->package_name;
+            $package->price = $request->price;
+            $package->frequency = $request->frequency;
+            $package->property_limit = $request->property_limit;
+            $package->no_of_adds = $request->no_of_adds;
+            $package->agent_profile = $request->agent_profile;
+            $package->featured_properties = $request->featured_properties;
+            $package->agency_profile = $request->agency_profile;
+            $package->status = $request->status;
+            $package->save();
+    
+            return response()->json(['message' => 'Package updated successfully'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
     }
 
     public function destroy($id)
     {
         $package = Package::find($id);
         $package->is_delete = 1;
-        $package->delete();
+        $package->save();
         return response()->json(['message' => 'Package Deleted Successfully'], 200);
     }
 
@@ -95,7 +104,7 @@ class PackageController extends Controller
     public function getPackages()
     {
         try {
-            $packages = Package::where('status', 'active')->orderBy('id', 'desc')
+            $packages = Package::where('status', 'active')->where('is_delete',0)->orderBy('id', 'desc')->take(3)
                                 ->get()
                                 ->map(function ($package) {
                 return [

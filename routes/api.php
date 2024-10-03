@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\AgentAuthController;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Package\PackageController;
+use App\Http\Controllers\Payment\StripeController;
 use App\Http\Controllers\SubCategory\SubCategoryController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\Propertie\PropertieController;
@@ -107,6 +108,11 @@ Route::prefix('packages')->group(function () {
     Route::delete('delete/{id}', [PackageController::class, 'destroy']);
     Route::get('all-packages', [PackageController::class, 'allPackages']);
     Route::get('get-packages', [PackageController::class, 'getPackages']);
+});
+
+Route::prefix('payments')->group(function () {
+    Route::post('stripe', [StripeController::class, 'stripePayment']);
+    Route::post('stripe-webhook', [StripeController::class, 'handleWebhook']);
 });
 
 Route::get('countries', function () {
